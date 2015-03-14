@@ -10,27 +10,20 @@
 <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 <body>
     <div class="container">
-        <div class="well" ng-controller="FirstCtrl">
-            <div class="alert alert-success">
-                Scope of FirstCtrl
-            </div>
-            <input type="text" ng-model="data.message">
-            <h1>{{data.message}}</h1>
-        </div>
 
-        <div class="well" ng-controller="SecondCtrl">
+        <div class="well" ng-controller="TextController">
             <div class="alert alert-success">
-                Scope of SecondCtrl
+                Scope of TextController
             </div>
             <input type="text" ng-model="data.message">
             <h1>{{data.message}}</h1>
             <div class="panel panel-success">
                 <h2>...and the reversed message is...</h2>
-                <!-- This way we were accessing data from the controller using $scope -->
-                <!-- <span>{{reverse()}}</span> -->
+                <!-- earlier we were calling the method with the message like so... -->
+                <!-- <i>{{reverseMessage(data.message)}}</i> -->
 
-                <!-- but we can totally pass the message as an argument to the method -->
-                <i>{{reverse(data.message)}}</i>
+                <!-- but all we wanna do is to filter our message to get the reversed string... -->
+                <i> {{data.message | reverseMessage}}</i>
             </div>
         </div>
         <div class="alert alert-info">
@@ -41,30 +34,28 @@
     <script type="text/javascript" src="lib/angular/angular.min.js"></script>
 
     <script>
-    var aModule = angular.module('AModule', [])
+    var aModule = angular.module('AModule', []);
 
-    aModule.controller('FirstCtrl', function FirstCtrl($scope){
-       $scope.data = {message : "Hi from first Controller"};
-    });
+    aModule.controller('TextController', function TextController($scope){
+        $scope.data = {message : "Hi from second Controller"};
 
-    aModule.controller('SecondCtrl', function SecondCtrl($scope){
-       $scope.data = {message : "Hi from second Controller"};
+        //we had this method for getting the reverse of a string.
+        //but a filter is better suited. so we will comment it off
+        //and create a custom filter.
 
-        //creating a method here that would return 
-        //the reverse of the message
-        // $scope.reverse = function(){
-        //     return $scope.data.message.split("").reverse().join("");
+        // $scope.reverseMessage = function(message){
+        //     return message.split("").reverse().join("");
         // }
-
-
-        //above, we directly accessed the data.message via the $scope
-        //which is a bad practice.. so we then passed in the value of
-        //data.message from template in second approach.
-        $scope.reverse = function(message){
-            return message.split("").reverse().join("");
-        }
         
     });
+
+    //creating our custom filter to reverse the message
+    //this also helps in making a filter available module wide
+    aModule.filter("reverseMessage", function(){
+        return function(text){
+            return text.split("").reverse().join("");
+        }
+    })
     </script>
 </body>
 </html>
