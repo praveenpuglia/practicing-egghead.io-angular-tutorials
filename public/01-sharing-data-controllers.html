@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="AModule">
+<head>
+    <title>angularAtoZ | Sharing Data Among Controllers</title>
+    <!-- <base href="/"> -->
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+<body>
+    <div class="container">
+        <div class="well" ng-controller="FirstCtrl">
+            <div class="alert alert-success">
+                Scope of FirstCtrl
+            </div>
+            <input type="text" ng-model="data.message">
+            <h1>{{data.message}}</h1>
+        </div>
+
+        <div class="well" ng-controller="SecondCtrl">
+            <div class="alert alert-success">
+                Scope of SecondCtrl
+            </div>
+            <input type="text" ng-model="data.message">
+            <h1>{{data.message}}</h1>
+        </div>
+        <div class="alert alert-info">
+            Read more at... <a href="https://docs.angularjs.org/api/auto/service/$provide#factory">https://docs.angularjs.org/api/auto/service/$provide#factory</a>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- <script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script> -->
+    <!-- <script type="text/javascript" src="lib/bootstrap/dist/js/bootstrap.min.js"></script> -->
+    <script type="text/javascript" src="lib/angular/angular.min.js"></script>
+
+    <script>
+    /**
+    * Trying Module
+    *
+    * Description
+    */
+    var aModule = angular.module('AModule', [])
+
+
+    //creating a service using a factory which retuns data as required. 
+    //This will be helpful 
+    aModule.factory('Data', function(){
+        return { message : "I am a message from the service"};
+    });
+
+    //our controllers
+    //
+    //injecting the Data service we created above as an argument of the controller function...both controllers
+    aModule.controller('FirstCtrl', function FirstCtrl($scope, Data){
+        $scope.data = Data;
+    });
+
+    aModule.controller('SecondCtrl', function SecondCtrl($scope, Data){
+        $scope.data = Data;
+        
+    });
+    </script>
+</body>
+</html>
