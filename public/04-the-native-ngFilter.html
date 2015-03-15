@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html ng-app="AtoZAngular">
+<head>
+    <title>angularAtoZ | native ngFilter </title>
+    <!-- <base href="/"> -->
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+<body>
+    <div class="container">
+
+        <div ng-controller="RepositoryController">
+            <h1>My Repositories</h1>
+            <div class="alert alert-info">The data is pulled from github public api - <strong>https://api.github.com/users/USERNAME/repos</strong></div>
+
+            <div class="alert alert-warning"><strong>IMPORTANT!!!</strong> All filters can work together. You may want to clear one before using other</div>
+
+            <div class="center-block text-center well">
+                <!-- search.$ searches everything it finds wherever it is used. In out case, All the rows since we use it with ng-repeat -->
+                <input ng-model="search.$" placeholder="Filter Everything" type="text" style="font-size:rem; padding:10px; border:1px solid" >
+                
+                <!-- search.name as model tells angular to match anything in the name column in each row. -->
+                <input ng-model="search.name" placeholder="Filter only via name" type="text" style="font-size:rem; padding:10px; border:1px solid" >
+                
+                <!-- similarly search.description as model tells angular to match anything in the description column in each row. -->
+                <input ng-model="search.description" placeholder="Filter only via description" type="text" style="font-size:rem; padding:10px; border:1px solid" >
+            </div>
+
+           <div class="table-responsive">
+               <table class="table-striped table-fixed table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>URL</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <!-- Our template to parse the data using ng-repeat. More on that soon! -->
+                    <!-- Piping the filter criteria with ng-repeat. Depending on which input box you type, the data
+                        gets filtered -->
+                    <tr ng-repeat="repo in repositories | filter:search"> 
+                        <td>{{repo.name}}</td>
+                        <td><a target="_blank" href="{{repo.html_url}}">{{repo.html_url}}</a></td>
+                        <td>{{repo.description}}</td>
+                    </tr>
+               </table>
+           </div>
+        <div class="alert alert-info">
+            Read more at... <a href="https://docs.angularjs.org/api/ng/filter/filter">https://docs.angularjs.org/api/ng/filter/filter</a>
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="lib/angular/angular.min.js"></script>
+
+    <script>
+    var atoZAngular = angular.module('AtoZAngular', []);
+
+    // the controller that takes in data from Repositories factory and sets it up in scope as repositories
+    atoZAngular.controller('RepositoryController', function RepositoryController($scope, Repositories){
+        $scope.repositories = Repositories;
+    });
+
+
+    // the factory that returns the list of repositories
+    atoZAngular.factory("Repositories",function(){
+        return [
+            {
+                "name": "android_device_xiaomi_armani",
+                "html_url": "https://github.com/praveenpuglia/android_device_xiaomi_armani",
+                "description": "Android device configuration for the Xiaomi Redmi 1S"
+            },
+            {
+                "name": "New-Faceboook-Icons",
+                "html_url": "https://github.com/praveenpuglia/New-Faceboook-Icons",
+                "description": "a chrome extension for replacing the boring facebook emoticons with new ones."
+            },
+            {
+                "name": "practicing-egghead.io-angular-tutorials",
+                "html_url": "https://github.com/praveenpuglia/practicing-egghead.io-angular-tutorials",
+                "description": "all the code i practice after watching those videos. A big thanks to egghead.io :)"
+            },
+            {
+                "name": "quickfont",
+                "html_url": "https://github.com/praveenpuglia/quickfont",
+                "description": "quickfont is a small project which aims to make it easier to experiment with google webfonts, all at one place."
+            },
+            {
+                "name": "shit.ly",
+                "html_url": "https://github.com/praveenpuglia/shit.ly",
+                "description": "an extensive url shortener built on laravel"
+            },
+            {
+                "name": "Sublime-Snippets",
+                "html_url": "https://github.com/praveenpuglia/Sublime-Snippets",
+                "description": "A colleciton of Useful sublime snippets used in daily workflow."
+            }
+        ]
+    });
+    </script>
+</body>
+</html>
