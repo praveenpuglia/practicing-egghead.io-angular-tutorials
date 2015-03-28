@@ -42,16 +42,17 @@
             </div>
 
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-sm-6">
                     <strong>NOTE : </strong> What angular really does is whenever it finds a directive in the scope, it puts the provided template inside that element. See the generated output above.
                 </div>
-                <div class="col-xs-6">
+                <div class="col-sm-6">
                     <div class="alert alert-info">
                         <p>
                             The name &amp; usage of the directives is important. Within javascript, the directive names are <strong>camelCased</strong>. While using them in html, they should be <strong>lowercased</strong> and separated by a <strong>dash( - )</strong>
                         </p>
 
                         <p>Example : genericError --> generic-error</p>
+                        <blockquote>module.directive takes the normalized directive name followed by a factory function.</blockquote>
                     </div>
                 </div>
             </div>
