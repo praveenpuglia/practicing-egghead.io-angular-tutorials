@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html ng-app="AtoZAngular">
+    <head>
+        <title>angularAtoZ | custom directives - 1 </title>
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+        <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Custom Directives - 1</h1>
+            <div class="well">
+                <h2>Using a custom element</h2>
+                
+                <p>The following alert is made using a custom directive using a custom element - <code>&lt;generic-error&gt;&lt;/generic-error&gt;</code></p>
+                <generic-error></generic-error>
+
+                <h3>Generated Output</h3>
+                <pre>
+&lt;generic-error&gt;
+    &lt;div class=&quot;alert alert-danger&quot;&gt; Whoops! Something went wrong!   :(&lt;/div&gt;
+&lt;/generic-error&gt;
+                </pre>
+            </div>
+
+            <div class="well">
+                <h2>Using a custom attribute</h2>
+                
+                <p>The following alert is made using a custom directive using a custom attribute - <code>generic-success</code></p>
+
+                <p>The HTML looks like this... <code>&lt;div generic-success&gt;&lt;/div&gt;</code></p>
+
+                <div generic-success></div>
+                <h3>Generated Output</h3>
+                <pre>
+&lt;div generic-success&gt;
+    &lt;div class=&quot;alert alert-success&quot;&gt; Everything's Alright! :)&lt;/div&gt;
+&lt;/div&gt;
+                </pre>
+
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <strong>NOTE : </strong> What angular really does is whenever it finds a directive in the scope, it puts the provided template inside that element. See the generated output above.
+                </div>
+                <div class="col-xs-6">
+                    <div class="alert alert-info">
+                        <p>
+                            The name &amp; usage of the directives is important. Within javascript, the directive names are <strong>camelCased</strong>. While using them in html, they should be <strong>lowercased</strong> and separated by a <strong>dash( - )</strong>
+                        </p>
+
+                        <p>Example : genericError --> generic-error</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info"> Read more at... <a target="_blank" href="https://docs.angularjs.org/guide/directive">https://docs.angularjs.org/guide/directive</a>
+            </div>
+
+
+
+        </div>        
+        <script type="text/javascript" src="lib/angular/angular.min.js"></script>
+
+        <script>
+            var atoZAngular = angular.module('AtoZAngular', []);
+
+            // creating the custom directive for the <generic-error> custom element. 
+            atoZAngular.directive("genericError", function(){
+                return {
+                    restrict : "E", //caps E for element
+                    template : "<div class='alert alert-danger'> Whoops! Something went wrong!   :(</div>"
+                }
+            });
+
+            // creating another custom directive. this time using a custom attribute.
+            atoZAngular.directive("genericSuccess", function(){
+                return {
+                    restrict : "A",
+                    template : "<div class='alert alert-success'> Everything's Alright! :)</div>"
+                }
+            });
+        </script>
+    </body>
+</html>
