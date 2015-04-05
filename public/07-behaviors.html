@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html ng-app="AtoZAngular">
+    <head>
+        <title>angularAtoZ | Behaviors</title>
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" href="css/bootstrap.theme.paper.min.css">
+        <style>
+            .circle {
+                height: 200px;
+                width: 200px;
+                border-radius:50%;
+                background: #D20101;
+                padding:20px;
+                margin: 0 auto;
+                -webkit-transition: .3s;
+                -o-transition: .3s;
+                transition: .3s;
+            }
+            .message {
+                color:#fff;
+                text-align: center;
+                font-size: 18px;
+                -webkit-transition: .3s;
+                -o-transition: .3s;
+                transition: .3s;
+            }
+            .zoom-double {
+                -webkit-transform: scale(2);
+                -ms-transform: scale(2);
+                -o-transform: scale(2);
+                transform: scale(2);
+            }
+        </style>
+        <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Behaviors</h1>
+            <div class="alert alert-info">
+                <p>When creating behaviors which will be used via attributes, it's best to keep their name generic, describing when the behavior happens rather than what the behavior does.</p>
+                <p>In the example here, the behavior names are <code>enter</code> and <code>leave</code> instead of <code>grow</code> and <code>shrink</code>. This makes room for a more re-usable code.</p>
+            </div>
+                        <pre>
+&lt;div class=&quot;circle&quot; enter=&quot;zoom-double&quot; leave&gt;
+    &lt;h2 class=&quot;message&quot;&gt;Hover over and I'll Grow!&lt;/h2&gt;
+&lt;/div&gt;</pre>
+            <div class="circle" enter="zoom-double" leave>
+                <h2 class="message">Hover over and I'll Grow!</h2>
+            </div>
+            
+            <div class="alert alert-info"> Read more at... <a target="_blank" href="https://docs.angularjs.org/guide/directive#creating-a-directive-that-manipulates-the-dom">https://docs.angularjs.org/guide/directive#creating-a-directive-that-manipulates-the-dom</a>
+            </div>
+
+        </div>        
+        <script type="text/javascript" src="lib/angular/angular.min.js"></script>
+
+        <script>
+            var atoZAngular = angular.module('AtoZAngular', []);
+
+            // 
+            atoZAngular.directive("enter", function(){
+                //this is equivalent to returning an object with a single 
+                //link property specifying a css/bootstrap.theme.paper.min.css.
+                //e.g.
+                // return {
+                //     link : function(scope, element, attrs){
+                //         
+                //     }
+                // }
+                return function(scope, element, attrs){
+                    element.bind("mouseenter", function(){
+                        element.addClass(attrs.enter); //attrs allow us to access directive attributes
+                    });
+                }
+            });
+
+            atoZAngular.directive("leave", function(){
+                return function(scope, element, attrs){
+                    element.bind("mouseleave", function(){
+                        element.removeClass(attrs.enter);
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>
