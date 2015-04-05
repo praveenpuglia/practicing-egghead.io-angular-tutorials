@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="AtoZAngular">
     <head>
-        <title>angularAtoZ | custom directives - 1 </title>
+        <title>angularAtoZ | Custom Directives</title>
 
         <!-- Stylesheets -->
         <link rel="stylesheet" href="css/bootstrap.theme.paper.min.css">
@@ -9,7 +9,7 @@
     </head>
     <body>
         <div class="container">
-            <h1>Custom Directives - 1</h1>
+            <h1>Custom Directives</h1>
             <div class="well">
                 <h2>Using a custom element</h2>
                 
@@ -25,7 +25,7 @@
             </div>
 
             <div class="well">
-                <h2>Using a custom attribute</h2>
+                <h2>Using a custom attribute<sup>#</sup> </h2>
                 
                 <p>The following alert is made using a custom directive using a custom attribute - <code>generic-success</code></p>
 
@@ -41,9 +41,21 @@
 
             </div>
 
+            <div class="well">
+                <h2>Loading template from an HTML file<sup>##</sup> </h2>
+                
+                <p>The huge error is loaded from <code>support/hugeError.html</code> using the <code>&lt;huge-error&gt;&lt;/huge-error&gt;</code> element </p>
+                <huge-error></huge-error>
+            </div>
+
             <div class="row">
                 <div class="col-sm-6">
-                    <strong>NOTE : </strong> What angular really does is whenever it finds a directive in the scope, it puts the provided template inside that element. See the generated output above.
+                    <p><strong>NOTE : </strong> What angular really does is whenever it finds a directive in the scope, it puts the provided template inside that element. See the generated output above.</p>
+                    
+                    <p><strong># :</strong> By default, the directives are restricted to attributes(<code>restrict : "A" </code>) since they make most sense that way.</p>
+
+                    <p><strong>## :</strong> Make sure you type <code>templateUrl</code> and not <code>templateURL</code> or it won't work. Angular doesn't throw errors however.</p>
+
                 </div>
                 <div class="col-sm-6">
                     <div class="alert alert-info">
@@ -81,6 +93,14 @@
                 return {
                     restrict : "A",
                     template : "<div class='alert alert-success'> Everything's Alright! :)</div>"
+                }
+            });
+
+            atoZAngular.directive("hugeError", function(){
+                return {
+                    restrict : "E",
+                    //loading the template from a URL
+                    templateUrl: "support/hugeError.html"
                 }
             });
         </script>
